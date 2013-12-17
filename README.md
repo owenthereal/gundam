@@ -1,7 +1,7 @@
 Gundam
 ======
 
-Gundam is the most destructive robot! For now, it conquer the world with [Sphero](http://www.gosphero.com/).
+Gundam is the most destructive robot! For now, it conquers the world with [Sphero](http://www.gosphero.com/).
 
 ![](https://dl.dropboxusercontent.com/u/1079131/00_gundam.jpg)
 
