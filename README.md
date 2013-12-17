@@ -6,7 +6,7 @@ Gundam is the most destructive robot! For now, it conquer the world with [Sphero
 ![](https://dl.dropboxusercontent.com/u/1079131/00_gundam.jpg)
 
 ```plain
-$ go run main.go
+$ SPHERO_PORT=/dev/tty.Sphero-ORY-AMP-SPP go run main.go
 
 $ curl http://localhost:3000/robots
 [{"Connections":[{"Name":"sphero","Port":"/dev/tty.Sphero-ORY-AMP-SPP","Connected":false,"Params":null}],"Devices":[{"Interval":"0.1s","Pin":"","Name":"sphero","Params":null,"Commands":["SetRGBC","RollC","StopC"],"SpheroAdaptor":{"Name":"sphero","Port":"/dev/tty.Sphero-ORY-AMP-SPP","Connected":false,"Params":null}}],"Name":"gundam","Commands":null}]

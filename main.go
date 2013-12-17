@@ -10,16 +10,21 @@ import (
 )
 
 func main() {
+	spheroPort := os.Getenv("SPHERO_PORT")
+	if spheroPort == "" {
+		spheroPort = "/dev/tty.Sphero-ORY-AMP-SPP"
+	}
+
 	master := gobot.GobotMaster()
 	gobot.Api(master)
 
 	robots := map[string][]string{
-		"gundam": []string{"sphero", "/dev/tty.Sphero-ORY-AMP-SPP"},
+		"gundam": []string{"sphero", spheroPort},
 	}
 
 	for name, spheros := range robots {
 		spheroAdaptor := new(gobotSphero.SpheroAdaptor)
-    spheroAdaptor.Name = spheros[0]
+		spheroAdaptor.Name = spheros[0]
 		spheroAdaptor.Port = spheros[1]
 
 		sphero := gobotSphero.NewSphero(spheroAdaptor)
