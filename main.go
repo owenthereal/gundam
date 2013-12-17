@@ -52,10 +52,12 @@ func main() {
 	go func() {
 		<-c
 		for _, robot := range master.Robots {
-			fmt.Printf("Stopping devise %s...\n", robot.Name)
-			gobot.Call(robot.GetDevice(robot.Name).Driver, "StopC")
+			for _, device := range robot.GetDevices() {
+				fmt.Printf("Stopping device %s...\n", device.Name)
+				gobot.Call(device.Driver, "StopC")
+			}
 		}
-		os.Exit(1)
+		os.Exit(0)
 	}()
 
 	master.Start()
