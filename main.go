@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/hybridgroup/gobot"
-	"github.com/hybridgroup/gobot-sphero"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/hybridgroup/gobot"
+	"github.com/hybridgroup/gobot-sphero"
 )
 
 func main() {
@@ -30,10 +31,10 @@ func main() {
 		sphero := gobotSphero.NewSphero(spheroAdaptor)
 		sphero.Name = spheros[0]
 
-		connections := []interface{}{
+		connections := []gobot.Connection{
 			spheroAdaptor,
 		}
-		devices := []interface{}{
+		devices := []gobot.Device{
 			sphero,
 		}
 
