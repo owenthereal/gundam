@@ -8,6 +8,11 @@ func main() {
 		port = "/dev/tty.Sphero-ORY-AMP-SPP"
 	}
 
-	sphero := &Sphero{Name: "Gundam", Port: port}
-	sphero.Start()
+	s := &sphero{Name: "Gundam", Port: port}
+	defer s.Stop()
+
+	api := &Api{s}
+	go api.Start()
+
+	s.Start()
 }
