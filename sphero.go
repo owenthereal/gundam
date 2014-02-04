@@ -5,6 +5,10 @@ import (
 	"github.com/hybridgroup/gobot-sphero"
 )
 
+func NewSphero(name, port string) Sphero {
+	return &sphero{Name: "Gundam", Port: port}
+}
+
 type Sphero interface {
 	Start()
 	Stop()

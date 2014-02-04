@@ -21,14 +21,14 @@ func (s *FakeSphero) SetRGB(r, g, b uint8) {
 
 var (
 	fakeSphero *FakeSphero
-	api        *Api
+	api        Api
 	server     *httptest.Server
 )
 
 func setup() {
 	fakeSphero = &FakeSphero{}
-	api = &Api{fakeSphero}
-	server = httptest.NewServer(api.mux())
+	api = &ApiMartini{fakeSphero}
+	server = httptest.NewServer(api.Handler())
 }
 
 func tearDown() {

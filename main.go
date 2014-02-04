@@ -1,6 +1,9 @@
 package main
 
-import "os"
+import (
+	"net/http"
+	"os"
+)
 
 func main() {
 	port := os.Getenv("PORT")
@@ -8,11 +11,13 @@ func main() {
 		port = "/dev/tty.Sphero-ORY-AMP-SPP"
 	}
 
-	s := &sphero{Name: "Gundam", Port: port}
+	s := NewSphero("Gundam", port)
 	defer s.Stop()
 
-	api := &Api{s}
-	go api.Start()
+	go func() {
+		api := NewApi(s)
+		http.ListenAndServe(":8080", api.Handler())
+	}()
 
 	s.Start()
 }
