@@ -25,9 +25,15 @@ var (
 	server     *httptest.Server
 )
 
-func setup() {
+func setupMartini() {
 	fakeSphero = &FakeSphero{}
 	api = &ApiMartini{fakeSphero}
+	server = httptest.NewServer(api.Handler())
+}
+
+func setupPlain() {
+	fakeSphero = &FakeSphero{}
+	api = &ApiPlain{fakeSphero}
 	server = httptest.NewServer(api.Handler())
 }
 
@@ -35,23 +41,52 @@ func tearDown() {
 	server.Close()
 }
 
-func TestApi_InvalidRgb(t *testing.T) {
-	setup()
+func TestApiPlain_InvalidRgb(t *testing.T) {
+	setupPlain()
 	defer tearDown()
 
 	url := fmt.Sprintf("%s/rgb/invalid", server.URL)
-	resp, err := http.Post(url, "", nil)
+	req, _ := http.NewRequest("PUT", url, nil)
+	resp, err := http.DefaultClient.Do(req)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, 404, resp.StatusCode)
+}
+
+func TestApiPlain_ValidRgb(t *testing.T) {
+	setupPlain()
+	defer tearDown()
+
+	url := fmt.Sprintf("%s/rgb/255,255,255", server.URL)
+	req, _ := http.NewRequest("PUT", url, nil)
+	resp, err := http.DefaultClient.Do(req)
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, 201, resp.StatusCode)
+	assert.Equal(t, (uint8)(255), fakeSphero.R)
+	assert.Equal(t, (uint8)(255), fakeSphero.G)
+	assert.Equal(t, (uint8)(255), fakeSphero.B)
+}
+
+func TestApiMartini_InvalidRgb(t *testing.T) {
+	setupMartini()
+	defer tearDown()
+
+	url := fmt.Sprintf("%s/rgb/invalid", server.URL)
+	req, _ := http.NewRequest("PUT", url, nil)
+	resp, err := http.DefaultClient.Do(req)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, 400, resp.StatusCode)
 }
 
-func TestApi_ValidRgb(t *testing.T) {
-	setup()
+func TestApiMartini_ValidRgb(t *testing.T) {
+	setupMartini()
 	defer tearDown()
 
 	url := fmt.Sprintf("%s/rgb/255,255,255", server.URL)
-	resp, err := http.Post(url, "", nil)
+	req, _ := http.NewRequest("PUT", url, nil)
+	resp, err := http.DefaultClient.Do(req)
 
 	assert.Equal(t, nil, err)
 	assert.Equal(t, 201, resp.StatusCode)
