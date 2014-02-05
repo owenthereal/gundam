@@ -16,7 +16,7 @@ func main() {
 
 	go func() {
 		api := NewApi(s)
-		http.ListenAndServe(":8080", api.Handler())
+		http.ListenAndServe(":3000", api.Handler())
 	}()
 
 	s.Start()
